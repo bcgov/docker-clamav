@@ -13,7 +13,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q
         clamav-daemon \
         clamav-freshclam \
         libclamunrar9 \
-        wget
+        wget \
+        ca-certificates
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
