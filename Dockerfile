@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:buster-20201209
 
 # Debian Base to use
 ENV DEBIAN_VERSION buster
