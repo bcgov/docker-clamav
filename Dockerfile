@@ -44,8 +44,10 @@ RUN chgrp -R root /var/log/clamav && \
 # av configuration update
 RUN sed -i 's/^Foreground .*$/Foreground true/g' /etc/clamav/clamd.conf && \
     sed -i '/LocalSocketGroup/d' /etc/clamav/clamd.conf && \
+    sed -i 's/SelfCheck 3600/SelfCheck 43200/g' /etc/clamav/clamd.conf && \
     echo "TCPSocket 3310" >> /etc/clamav/clamd.conf && \
     sed -i 's/^Foreground .*$/Foreground true/g' /etc/clamav/freshclam.conf && \
+    sed -i 's/Checks 24/Checks 2/g' /etc/clamav/freshclam.conf && \
     sed -i 's/^ConnectTimeout 30/ConnectTimeout 90/g' /etc/clamav/freshclam.conf
 
 # volume provision
