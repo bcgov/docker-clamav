@@ -1,4 +1,4 @@
-FROM debian:buster-20201209
+FROM docker-remote.artifacts.developer.gov.bc.ca/debian:buster-20201209
 
 # Debian Base to use
 ENV DEBIAN_VERSION buster
@@ -20,9 +20,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get clean
 RUN rm -rf /var/lib/apt/lists/*
 
 # initial update of av databases
-RUN wget -O /var/lib/clamav/main.cvd http://database.clamav.net/main.cvd && \
-    wget -O /var/lib/clamav/daily.cvd http://database.clamav.net/daily.cvd && \
-    wget -O /var/lib/clamav/bytecode.cvd http://database.clamav.net/bytecode.cvd && \
+RUN wget -O /var/lib/clamav/main.cvd https://clamav-mirror.apps.silver.devops.gov.bc.ca/main.cvd && \
+    wget -O /var/lib/clamav/daily.cvd https://clamav-mirror.apps.silver.devops.gov.bc.ca/daily.cvd && \
+    wget -O /var/lib/clamav/bytecode.cvd https://clamav-mirror.apps.silver.devops.gov.bc.ca/bytecode.cvd && \
     chown clamav:clamav /var/lib/clamav/*.cvd
 
 # permission juggling
@@ -46,7 +46,9 @@ RUN sed -i 's/^Foreground .*$/Foreground true/g' /etc/clamav/clamd.conf && \
     sed -i '/LocalSocketGroup/d' /etc/clamav/clamd.conf && \
     echo "TCPSocket 3310" >> /etc/clamav/clamd.conf && \
     sed -i 's/^Foreground .*$/Foreground true/g' /etc/clamav/freshclam.conf && \
-    sed -i 's/^ConnectTimeout 30/ConnectTimeout 90/g' /etc/clamav/freshclam.conf
+    sed -i 's/^ConnectTimeout 30/ConnectTimeout 90/g' /etc/clamav/freshclam.conf && \
+    sed -i '/DatabaseMirror/d' /etc/clamav/freshclam.conf && \
+    echo "DatabaseMirror https://clamav-mirror.apps.silver.devops.gov.bc.ca" >> /etc/clamav/freshclam.conf
 
 # volume provision
 VOLUME ["/var/lib/clamav"]
