@@ -1,4 +1,4 @@
-FROM debian:buster-20201209
+FROM docker-remote.artifacts.developer.gov.bc.ca/debian:buster-20201209
 
 # Debian Base to use
 ENV DEBIAN_VERSION buster
