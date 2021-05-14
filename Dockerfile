@@ -49,6 +49,7 @@ RUN sed -i 's/^Foreground .*$/Foreground true/g' /etc/clamav/clamd.conf && \
     sed -i 's/^Foreground .*$/Foreground true/g' /etc/clamav/freshclam.conf && \
     sed -i 's/^ConnectTimeout 30/ConnectTimeout 90/g' /etc/clamav/freshclam.conf && \
     sed -i 's/^Checks 24/Checks 1/g' /etc/clamav/freshclam.conf && \
+    sed -i 's/^# Check for new database 24 times a day/# Check for new database once a day/g' /etc/clamav/freshclam.conf && \
     sed -i '/DatabaseMirror/d' /etc/clamav/freshclam.conf && \
     echo "DatabaseMirror https://clamav-mirror.apps.silver.devops.gov.bc.ca" >> /etc/clamav/freshclam.conf
 
